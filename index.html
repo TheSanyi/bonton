@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonton Táncsport-egyesület</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-main">Bonton</span>
+      <span class="nav-logo-sub">Táncsport-egyesület</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#tancok">Táncok</a></li>
+      <li><a href="#orarend">Órarend</a></li>
+      <li><a href="#esemenyek">Események</a></li>
+      <li><a href="#galeria">Galéria</a></li>
+      <li><a href="#tanarok">Tanárok</a></li>
+      <li><a href="#kapcsolat">Kapcsolat</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="blob blob3"></div>
+  <div class="hero-content">
+<!--    <p class="hero-eyebrow rv">Budapest &mdash; Alapítva 2012</p>-->
+    <h1 class="hero-name rv d1">Bonton</h1>
+    <p class="hero-name-sub rv d2">Táncsport-egyesület</p>
+    <p class="hero-desc rv d3">A mozgás precizitása, a ritmus szabadsága. Profi oktatók, valódi közösség, mérhető eredmények — kezdőtől versenyképes szintig.</p>
+    <div class="hero-btns rv d3">
+      <a href="#orarend" class="btn-uv">Órarend</a>
+      <a href="#esemenyek" class="btn-ghost">Események</a>
+    </div>
+  </div>
+</section>
+
+<!-- TANCOK -->
+<section id="tancok" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <p class="sec-kicker">Repertoárunk</p>
+      <h2 class="sec-title">Táncok, amelyeket <em>tanítunk</em></h2>
+    </div>
+    <table class="dance-table rv">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Tánc</th>
+          <th>Szint</th>
+          <th>Leírás</th>
+          <th style="text-align:right">Heti órák</th>
+        </tr>
+      </thead>
+      <tbody id="dances-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ORAREND -->
+<section id="orarend" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <p class="sec-kicker">Heti beosztás</p>
+      <h2 class="sec-title">Egész éves <em>órarend</em></h2>
+<!--      <p class="sec-sub">Az órarend az egész tanévben változatlan. Minden óra 60 perces.</p>-->
+    </div>
+    <div class="week-grid rv">
+      <div class="day-col"><div class="day-head"><div class="day-name">Hétfő</div></div><div class="day-slots" data-day="hetfo"></div></div>
+      <div class="day-col"><div class="day-head"><div class="day-name">Kedd</div></div><div class="day-slots" data-day="kedd"></div></div>
+      <div class="day-col"><div class="day-head"><div class="day-name">Szerda</div></div><div class="day-slots" data-day="szerda"></div></div>
+      <div class="day-col"><div class="day-head"><div class="day-name">Csütörtök</div></div><div class="day-slots" data-day="csutortok"></div></div>
+      <div class="day-col"><div class="day-head"><div class="day-name">Péntek</div></div><div class="day-slots" data-day="pentek"></div></div>
+    </div>
+    <p class="or-note rv">Magánórák egyéni egyeztetés alapján &mdash; lépj velünk kapcsolatba.</p>
+  </div>
+</section>
+
+<!-- ESEMENYEK -->
+<section id="esemenyek" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <p class="sec-kicker">Aktuális</p>
+      <h2 class="sec-title">Közelgő <em>események</em></h2>
+      <p class="sec-sub">Workshopok, versenyek, nyílt napok és gálák &mdash; minden egy helyen.</p>
+    </div>
+    <div class="events-grid rv" id="events-grid"></div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <p class="sec-kicker">Galéria</p>
+<!--      <h2 class="sec-title">Pillanatok a <em>parketről</em></h2>-->
+    </div>
+    <div class="gal-grid rv" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lb-bg">
+  <button class="lb-close" id="lb-close">✕</button>
+  <button class="lb-prev" id="lb-prev">&#8249;</button>
+  <img class="lb-img" id="lb-img" src="" alt="">
+  <button class="lb-next" id="lb-next">&#8250;</button>
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
+
+<!-- TANAROK -->
+<section id="tanarok" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <p class="sec-kicker">Csapatunk</p>
+      <h2 class="sec-title">Tanáraink</h2>
+      <p class="sec-sub">Szenvedélyes, tapasztalt oktatók — mindannyian aktív versenyzők vagy előadóművészek.</p>
+    </div>
+    <div class="t-grid rv" id="teachers-grid"></div>
+  </div>
+</section>
+
+<!-- KAPCSOLAT -->
+<section id="kapcsolat" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <p class="sec-kicker">Kapcsolat</p>
+      <h2 class="sec-title">Írj <em>nekünk</em></h2>
+    </div>
+    <div class="k-wrap rv">
+      <div>
+        <div class="k-block">
+          <span class="k-label">Cím</span>
+          <div class="k-val">2030 Érd, Fehérvári út 63.<br></div>
+        </div>
+        <div class="k-div"></div>
+        <div class="k-block">
+          <span class="k-label">Telefon</span>
+          <div class="k-val">+36 1 234 5678</div>
+        </div>
+        <div class="k-div"></div>
+        <div class="k-block">
+          <span class="k-label">E-mail</span>
+          <div class="k-val">info@bontontse.hu</div>
+        </div>
+        <div class="k-div"></div>
+        <div class="k-block">
+          <span class="k-label">Nyitvatartás</span>
+          <div class="k-val" style="font-size:.95rem;line-height:1.9">H – P: 14:00 – 22:00<br>Szo: 10:00 – 15:00</div>
+        </div>
+        <div class="k-soc">
+          <a href="#" class="ksoc">Facebook</a>
+          <a href="#" class="ksoc">Instagram</a>
+          <a href="#" class="ksoc">YouTube</a>
+        </div>
+      </div>
+      <div class="kform">
+        <div class="krow2">
+          <div class="kf"><label>Neved</label><input type="text" placeholder="Kiss Anna"></div>
+          <div class="kf"><label>E-mail</label><input type="email" placeholder="anna@email.hu"></div>
+        </div>
+        <div class="kf">
+          <label>Érdeklődés</label>
+          <select>
+            <option>Próbaóra</option>
+            <option>Csoportos óra</option>
+            <option>Egyéni óra</option>
+            <option>Esküvői tánc</option>
+            <option>Gyermektánc</option>
+            <option>Esemény</option>
+            <option>Egyéb</option>
+          </select>
+        </div>
+        <div class="kf"><label>Üzenet</label><textarea placeholder="Mikor érsz rá, mi a célod, milyen előképzettséged van..."></textarea></div>
+        <button class="ksend" id="ksend">Üzenet küldése</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="f-logo">
+    <span class="f-logo-main">Bonton</span>
+    <span class="f-logo-sub">Táncsport-egyesület</span>
+  </a>
+  <ul class="f-links">
+    <li><a href="#tancok">Táncok</a></li>
+    <li><a href="#orarend">Órarend</a></li>
+    <li><a href="#esemenyek">Események</a></li>
+    <li><a href="#galeria">Galéria</a></li>
+    <li><a href="#tanarok">Tanárok</a></li>
+    <li><a href="#kapcsolat">Kapcsolat</a></li>
+  </ul>
+  <p class="f-copy">Érd, 2026 &mdash; Minden jog fenntartva</p>
+</footer>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const sb = createClient(
+  'https://vqsypzdilxdbfevtjgra.supabase.co',
+  'sb_publishable_SRyG2313fl-Kx5SVhH179w_g28A_7HM'
+);
+
+const HU_MONTHS = ['Január','Február','Március','Április','Május','Június','Július','Augusztus','Szeptember','Október','November','December'];
+const TYPE_CLASS = { 'Workshop':'et-w', 'Verseny':'et-v', 'Nyílt nap':'et-o', 'Évzáró Gála':'et-g', 'Egyéb':'et-g' };
+const TYPE_BTN   = { 'Workshop':'btn-ev btn-ev-pink', 'Verseny':'btn-ev', 'Nyílt nap':'btn-ev', 'Évzáró Gála':'btn-ev', 'Egyéb':'btn-ev' };
+const TYPE_LABEL = { 'Workshop':'Jelentkezés', 'Verseny':'Részletek', 'Nyílt nap':'Regisztráció', 'Évzáró Gála':'Jegy igénylése', 'Egyéb':'Részletek' };
+
+let galleryData = [];
+
+async function loadGallery() {
+  const { data } = await sb.from('gallery').select('*').order('sort_order');
+  const grid = document.getElementById('gallery-grid');
+  if (!data || !grid) return;
+  galleryData = data;
+  grid.innerHTML = data.map((item, i) => `
+    <div class="gal" data-idx="${i}" style="cursor:zoom-in">
+      <img src="${item.image_url}" alt="${item.caption ?? ''}" style="object-fit:cover;width:100%;height:100%;display:block">
+      ${item.caption ? `<div class="gal-over"><span>${item.caption}</span></div>` : ''}
+    </div>
+  `).join('');
+  grid.querySelectorAll('.gal').forEach(el => {
+    el.addEventListener('click', () => openLightbox(+el.dataset.idx));
+  });
+}
+
+let lbIndex = 0;
+const lb    = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+const lbCap = document.getElementById('lb-caption');
+
+function openLightbox(idx) {
+  lbIndex = idx;
+  showLbImage();
+  lb.classList.add('open');
+}
+function closeLightbox() { lb.classList.remove('open'); }
+function showLbImage() {
+  const item = galleryData[lbIndex];
+  lbImg.src = item.image_url;
+  lbImg.alt = item.caption ?? '';
+  lbCap.textContent = item.caption ?? '';
+}
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + galleryData.length) % galleryData.length;
+  showLbImage();
+});
+document.getElementById('lb-next').addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % galleryData.length;
+  showLbImage();
+});
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') { lbIndex = (lbIndex - 1 + galleryData.length) % galleryData.length; showLbImage(); }
+  if (e.key === 'ArrowRight') { lbIndex = (lbIndex + 1) % galleryData.length; showLbImage(); }
+});
+
+async function loadDances() {
+  const { data } = await sb.from('dances').select('*').order('sort_order');
+  const tbody = document.getElementById('dances-tbody');
+  if (!data || !tbody) return;
+  tbody.innerHTML = data.map((d, i) => `
+    <tr>
+      <td class="td-num">${String(i + 1).padStart(2, '0')}</td>
+      <td class="td-name">${d.name}</td>
+      <td class="td-lvl"><span class="lvl-badge ${d.level_badge}">${d.level}</span></td>
+      <td class="td-desc">${d.description ?? ''}</td>
+      <td class="td-hours">${d.weekly_hours ?? ''}</td>
+    </tr>
+  `).join('');
+}
+
+async function loadEvents() {
+  const { data } = await sb.from('events').select('*').order('date');
+  const grid = document.getElementById('events-grid');
+  if (!data || !grid) return;
+  grid.innerHTML = data.map(ev => {
+    const d = new Date(ev.date);
+    const day = String(d.getUTCDate()).padStart(2,'0');
+    const mon = HU_MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
+    const typeClass = TYPE_CLASS[ev.type] ?? 'et-g';
+    const btnClass  = TYPE_BTN[ev.type]   ?? 'btn-ev';
+    const btnLabel  = TYPE_LABEL[ev.type] ?? 'Részletek';
+    const imgHtml   = ev.image_url ? `<img src="${ev.image_url}" alt="${ev.title}" class="ev-card-img">` : '';
+    return `
+      <div class="ev-card">
+        ${imgHtml}
+        <div class="ev-top">
+          <span class="ev-type ${typeClass}">${ev.type}</span>
+          <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
+        </div>
+        <div class="ev-title">${ev.title}</div>
+        ${ev.description ? `<p class="ev-desc">${ev.description}</p>` : ''}
+        <div class="ev-loc">${ev.location ?? ''}${ev.location && ev.time_info ? ' &middot; ' : ''}<span>${ev.time_info ?? ''}</span></div>
+        <a href="#kapcsolat" class="${btnClass}">${btnLabel}</a>
+      </div>
+    `;
+  }).join('');
+}
+
+async function loadTeachers() {
+  const { data } = await sb.from('teachers').select('*').order('sort_order').order('name');
+  const grid = document.getElementById('teachers-grid');
+  if (!data || !grid) return;
+  grid.innerHTML = data.map(t => {
+    const initials = t.name.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
+    const imgHtml = t.image_url
+      ? `<img src="${t.image_url}" alt="${t.name}" class="tcard-img">`
+      : `<div class="tcard-img-placeholder">${initials}</div>`;
+    return `
+      <div class="tcard">
+        <div class="tcard-img-wrap">${imgHtml}</div>
+        <div class="tcard-name">${t.name}</div>
+        <div class="tcard-role">${t.role}</div>
+        ${t.bio ? `<p class="tcard-bio">${t.bio}</p>` : ''}
+        ${t.tags?.length ? `<div class="tcard-tags">${t.tags.map(tag => `<span class="ttag">${tag}</span>`).join('')}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+async function loadSchedule() {
+  const { data } = await sb.from('schedule').select('*').order('sort_order').order('start_time');
+  if (!data) return;
+  document.querySelectorAll('.day-slots[data-day]').forEach(col => {
+    const day = col.dataset.day;
+    const slots = data.filter(s => s.day === day);
+    col.innerHTML = slots.map(s => `
+      <div class="slot">
+        <div class="slot-time">${s.start_time.slice(0,5)}&ndash;${s.end_time.slice(0,5)}</div>
+        <div class="slot-name">${s.name}</div>
+        ${s.meta ? `<div class="slot-meta">${s.meta}</div>` : ''}
+        <span class="slot-badge ${s.badge}">${s.badge_label}</span>
+      </div>
+    `).join('');
+  });
+}
+
+loadDances();
+loadGallery();
+loadSchedule();
+loadEvents();
+loadTeachers();
+
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.07});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+document.querySelectorAll('#hero .rv').forEach((el,i)=>{setTimeout(()=>el.classList.add('on'),80+i*100)});
+document.getElementById('ksend').addEventListener('click',function(){
+  const o=this.textContent;
+  this.textContent='Elküldve';this.style.background='var(--pink)';
+  setTimeout(()=>{this.textContent=o;this.style.background='';},3000);
+});
+</script>
+</body>
+</html>
