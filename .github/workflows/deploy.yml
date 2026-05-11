@@ -23,7 +23,7 @@ jobs:
         run: cd admin && npm install
 
       - name: Build Angular admin
-        run: cd admin && npm run build -- --base-href /admin/
+        run: cd admin && npm run build -- --base-href /bonton/admin/
 
       - name: Prepare deploy folder
         run: |
