@@ -16,7 +16,7 @@
       <span class="nav-logo-main">Bonton</span>
       <span class="nav-logo-sub">Táncsport-egyesület</span>
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
       <li><a href="#tancok">Táncok</a></li>
       <li><a href="#orarend">Órarend</a></li>
       <li><a href="#esemenyek">Események</a></li>
@@ -24,6 +24,9 @@
       <li><a href="#tanarok">Tanárok</a></li>
       <li><a href="#kapcsolat">Kapcsolat</a></li>
     </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -161,9 +164,8 @@
         <div class="kf">
           <label>Érdeklődés</label>
           <select>
-            <option>Próbaóra</option>
             <option>Csoportos óra</option>
-            <option>Egyéni óra</option>
+            <option>Magánóra</option>
             <option>Esküvői tánc</option>
             <option>Gyermektánc</option>
             <option>Esemény</option>
@@ -349,6 +351,17 @@ loadTeachers();
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.07});
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 document.querySelectorAll('#hero .rv').forEach((el,i)=>{setTimeout(()=>el.classList.add('on'),80+i*100)});
+
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('nav-links');
+hamburger.addEventListener('click',()=>{
+  const open=navLinks.classList.toggle('open');
+  hamburger.classList.toggle('open',open);
+});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  navLinks.classList.remove('open');
+  hamburger.classList.remove('open');
+}));
 document.getElementById('ksend').addEventListener('click',function(){
   const o=this.textContent;
   this.textContent='Elküldve';this.style.background='var(--pink)';

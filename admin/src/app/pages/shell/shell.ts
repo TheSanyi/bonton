@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { DarkModeService } from '../../services/dark-mode.service';
+import { ToastComponent } from '../../components/toast/toast.component';
 
 const NAV = [
   { path: 'schedule', label: 'Órarend' },
@@ -14,7 +15,7 @@ const NAV = [
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastComponent],
   template: `
     <div class="layout">
       <aside class="sidebar">
@@ -35,6 +36,7 @@ const NAV = [
         <router-outlet />
       </main>
     </div>
+    <app-toast />
   `,
   styles: [`
     .layout { display: flex; min-height: 100vh; }

@@ -2,6 +2,7 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
+import { ToastService } from '../../services/toast.service';
 
 interface Slot {
   id: string;
@@ -128,6 +129,7 @@ const BADGE_OPTIONS = [
               <div class="form-actions">
                 <button type="button" class="btn-ghost" (click)="closeForm()">Mégse</button>
                 <button type="submit" class="btn-primary" [disabled]="saving()">
+                  @if (saving()) { <span class="btn-spinner"></span> }
                   {{ saving() ? 'Mentés...' : 'Mentés' }}
                 </button>
               </div>
@@ -220,7 +222,7 @@ export class ScheduleComponent implements OnInit {
   badgeOptions = BADGE_OPTIONS;
   form: FormGroup;
 
-  constructor(private sb: SupabaseService, private fb: FormBuilder) {
+  constructor(private sb: SupabaseService, private fb: FormBuilder, private toast: ToastService) {
     this.form = this.fb.group({
       day:         ['hetfo', Validators.required],
       start_time:  ['', Validators.required],
@@ -283,8 +285,8 @@ export class ScheduleComponent implements OnInit {
     const { error } = id
       ? await this.sb.client.from('schedule').update(val).eq('id', id)
       : await this.sb.client.from('schedule').insert(val);
-    if (error) { this.error.set(error.message); }
-    else { this.closeForm(); await this.load(); }
+    if (error) { this.toast.error(error.message); }
+    else { this.closeForm(); await this.load(); this.toast.success('Óra elmentve'); }
     this.saving.set(false);
   }
 
@@ -292,5 +294,6 @@ export class ScheduleComponent implements OnInit {
     if (!confirm('Biztosan törlöd ezt az órát?')) return;
     await this.sb.client.from('schedule').delete().eq('id', id);
     await this.load();
+    this.toast.info('Óra törölve');
   }
 }

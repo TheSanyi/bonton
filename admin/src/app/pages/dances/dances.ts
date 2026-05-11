@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SupabaseService } from '../../services/supabase.service';
+import { ToastService } from '../../services/toast.service';
 
 interface Dance {
   id: string;
@@ -87,7 +88,8 @@ interface Dance {
                     <div class="img-placeholder">Nincs kép</div>
                   }
                   <div class="img-actions">
-                    <label class="btn-upload">
+                    <label class="btn-upload" [class.disabled]="uploading()">
+                      @if (uploading()) { <span class="btn-spinner-dark"></span> }
                       {{ uploading() ? 'Feltöltés...' : 'Kép kiválasztása' }}
                       <input type="file" accept="image/*" (change)="onFileChange($event)" [disabled]="uploading()">
                     </label>
@@ -101,10 +103,10 @@ interface Dance {
                 <label>Leírás / Történet</label>
                 <textarea formControlName="description" rows="5" placeholder="A tánc eredete, története, jellemzői..."></textarea>
               </div>
-              @if (error()) { <p class="error">{{ error() }}</p> }
               <div class="form-actions">
                 <button type="button" class="btn-ghost" (click)="closeForm()">Mégse</button>
                 <button type="submit" class="btn-primary" [disabled]="saving() || uploading()">
+                  @if (saving()) { <span class="btn-spinner"></span> }
                   {{ saving() ? 'Mentés...' : 'Mentés' }}
                 </button>
               </div>
@@ -140,10 +142,12 @@ interface Dance {
     .img-preview { width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
     .img-placeholder { width: 100px; height: 100px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: #aaa; }
     .img-actions { display: flex; flex-direction: column; gap: .5rem; }
-    .btn-upload { display: inline-block; padding: .5rem .9rem; background: #f5f5f5; border: 1px solid #ddd; font-size: .78rem; cursor: pointer; border-radius: 2px; font-weight: 600; }
+    .btn-upload { display: inline-flex; align-items: center; padding: .5rem .9rem; background: #f5f5f5; border: 1px solid #ddd; font-size: .78rem; cursor: pointer; border-radius: 2px; font-weight: 600; }
     .btn-upload input[type=file] { display: none; }
     .btn-upload:hover { background: #eee; }
+    .btn-upload.disabled { opacity: .6; cursor: default; }
     .btn-del-img { padding: .4rem .9rem; background: #fff; border: 1px solid #f0c0c0; color: #c00; font-size: .75rem; cursor: pointer; border-radius: 2px; }
+    .btn-spinner-dark { display: inline-block; width: 10px; height: 10px; border: 2px solid rgba(0,0,0,.2); border-top-color: #333; border-radius: 50%; animation: spin .55s linear infinite; margin-right: .4rem; }
 
     .btn-edit, .btn-del {
       font-size: .7rem; padding: .22rem .6rem; border: 1px solid #ddd;
@@ -184,7 +188,7 @@ export class DancesComponent implements OnInit {
   previewUrl = signal<string | null>(null);
   form: FormGroup;
 
-  constructor(private sb: SupabaseService, private fb: FormBuilder) {
+  constructor(private sb: SupabaseService, private fb: FormBuilder, private toast: ToastService) {
     this.form = this.fb.group({
       name:        ['', Validators.required],
       sort_order:  [0],
@@ -242,6 +246,7 @@ export class DancesComponent implements OnInit {
     this.previewUrl.set(data.publicUrl);
     this.form.patchValue({ image_url: data.publicUrl });
     this.uploading.set(false);
+    this.toast.success('Kép feltöltve');
   }
 
   async save() {
@@ -253,8 +258,8 @@ export class DancesComponent implements OnInit {
     const { error } = id
       ? await this.sb.client.from('dances').update(val).eq('id', id)
       : await this.sb.client.from('dances').insert(val);
-    if (error) { this.error.set(error.message); }
-    else { this.closeForm(); await this.load(); }
+    if (error) { this.toast.error(error.message); }
+    else { this.closeForm(); await this.load(); this.toast.success('Tánc elmentve'); }
     this.saving.set(false);
   }
 
@@ -262,5 +267,6 @@ export class DancesComponent implements OnInit {
     if (!confirm('Biztosan törlöd ezt a táncot?')) return;
     await this.sb.client.from('dances').delete().eq('id', id);
     await this.load();
+    this.toast.info('Tánc törölve');
   }
 }

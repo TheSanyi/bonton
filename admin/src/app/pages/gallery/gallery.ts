@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../services/supabase.service';
+import { ToastService } from '../../services/toast.service';
 
 interface GalleryItem {
   id: string;
@@ -19,13 +20,12 @@ interface GalleryItem {
     <div class="page">
       <div class="page-header">
         <h1>Galéria</h1>
-        <label class="btn-primary">
+        <label class="btn-primary" [class.uploading]="uploading()">
+          @if (uploading()) { <span class="btn-spinner"></span> }
           {{ uploading() ? 'Feltöltés...' : '+ Képek feltöltése' }}
           <input type="file" accept="image/*" multiple (change)="onFilesChange($event)" [disabled]="uploading()">
         </label>
       </div>
-
-      @if (error()) { <p class="error">{{ error() }}</p> }
 
       @if (loading()) {
         <p class="info">Betöltés...</p>
@@ -62,10 +62,11 @@ interface GalleryItem {
 
     .btn-primary {
       background: #07102e; color: #fff; border: none; padding: .6rem 1.4rem;
-      font-size: .82rem; font-weight: 700; cursor: pointer; display: inline-block;
+      font-size: .82rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center;
     }
     .btn-primary input[type=file] { display: none; }
     .btn-primary:hover { background: #0c1a42; }
+    .btn-primary.uploading { opacity: .75; cursor: default; }
 
     .gal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; }
     .gal-item { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 4px; background: #eee; }
@@ -103,9 +104,8 @@ export class GalleryComponent implements OnInit {
   items = signal<GalleryItem[]>([]);
   loading = signal(false);
   uploading = signal(false);
-  error = signal('');
 
-  constructor(private sb: SupabaseService, private fb: FormBuilder) {}
+  constructor(private sb: SupabaseService, private fb: FormBuilder, private toast: ToastService) {}
 
   async ngOnInit() { await this.load(); }
 
@@ -120,19 +120,19 @@ export class GalleryComponent implements OnInit {
     const files = Array.from((e.target as HTMLInputElement).files ?? []);
     if (!files.length) return;
     this.uploading.set(true);
-    this.error.set('');
     const maxOrder = Math.max(0, ...this.items().map(i => i.sort_order));
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const path = `${Date.now()}_${i}.${file.name.split('.').pop()}`;
       const { error: upErr } = await this.sb.client.storage.from('gallery').upload(path, file);
-      if (upErr) { this.error.set('Feltöltési hiba: ' + upErr.message); continue; }
+      if (upErr) { this.toast.error('Feltöltési hiba: ' + upErr.message); continue; }
       const { data } = this.sb.client.storage.from('gallery').getPublicUrl(path);
       await this.sb.client.from('gallery').insert({ image_url: data.publicUrl, caption: '', sort_order: maxOrder + i + 1 });
     }
     this.uploading.set(false);
     await this.load();
     (e.target as HTMLInputElement).value = '';
+    this.toast.success(`${files.length} kép feltöltve`);
   }
 
   async updateCaption(item: GalleryItem) {
@@ -164,5 +164,6 @@ export class GalleryComponent implements OnInit {
     if (!confirm('Biztosan törlöd ezt a képet?')) return;
     await this.sb.client.from('gallery').delete().eq('id', item.id);
     await this.load();
+    this.toast.info('Kép törölve');
   }
 }

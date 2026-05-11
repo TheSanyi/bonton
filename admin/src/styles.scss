@@ -1,3 +1,17 @@
+/* ── SPINNER ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.btn-spinner {
+  display: inline-block;
+  width: 11px; height: 11px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .55s linear infinite;
+  vertical-align: middle;
+  margin-right: .4rem;
+}
+
 /* ── DARK MODE ── */
 
 body.dark { background: #0d111f; color: #e8eaf0; }
