@@ -18,7 +18,7 @@ jobs:
           cache-dependency-path: admin/package-lock.json
 
       - name: Install dependencies
-        run: cd admin && npm ci
+        run: cd admin && npm install
 
       - name: Build Angular admin
         run: cd admin && npm run build -- --base-href /admin/
