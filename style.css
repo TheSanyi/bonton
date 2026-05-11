@@ -60,7 +60,38 @@ body{
   background:var(--navy);
   color:var(--white);
   overflow-x:hidden;
+  transition:background .3s,color .3s;
 }
+
+/* ── LIGHT THEME ── */
+body.light{
+  --navy:#f5f7ff;
+  --navy2:#eceffe;
+  --navy3:#e2e6fc;
+  --navy4:#d8dcf8;
+  --white:#07102e;
+  --off:#07102e;
+  --text:rgba(7,16,46,.72);
+  --text2:rgba(7,16,46,.45);
+  --line:rgba(7,16,46,.1);
+  --line2:rgba(7,16,46,.16);
+  background:#f5f7ff;
+  color:#07102e;
+}
+body.light nav{background:rgba(245,247,255,.92)}
+body.light .nav-logo-main{color:#07102e}
+body.light .nav-links a{color:rgba(7,16,46,.45)}
+body.light .nav-links a:hover{color:#07102e}
+body.light .nav-links.open{background:rgba(245,247,255,.98)}
+body.light .hamburger span{background:#07102e}
+body.light .kf{background:rgba(7,16,46,.04)}
+body.light .kf:focus-within{background:#fff;border-color:var(--uv)}
+body.light .kf input,body.light .kf textarea,body.light .kf select{color:#07102e}
+body.light .kf input::placeholder,body.light .kf textarea::placeholder{color:rgba(7,16,46,.3)}
+body.light .kf select option{background:#f5f7ff;color:#07102e}
+body.light .hero-grid{opacity:.4}
+body.light .theme-btn{color:rgba(7,16,46,.5)}
+body.light .theme-btn:hover{color:#07102e}
 
 /* ── NAV ── */
 nav{
@@ -493,6 +524,12 @@ footer{
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
 /* ── HAMBURGER ── */
+.theme-btn{
+  background:none;border:none;cursor:pointer;
+  font-size:1rem;color:var(--text2);padding:.3rem;
+  transition:color .2s;line-height:1;
+}
+.theme-btn:hover{color:var(--white)}
 .hamburger{
   display:none;flex-direction:column;justify-content:center;gap:5px;
   background:none;border:none;cursor:pointer;padding:.4rem;z-index:310;
