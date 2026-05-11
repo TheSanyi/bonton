@@ -48,20 +48,10 @@
   <div class="sec-inner">
     <div class="sec-head rv">
       <p class="sec-kicker">Repertoárunk</p>
-      <h2 class="sec-title">Táncok, amelyeket <em>tanítunk</em></h2>
+      <h2 class="sec-title">Táncaink <em>világa</em></h2>
+      <p class="sec-sub">Ismerkedj meg azokkal a táncstílusokkal, amelyeket egyesületünkben tanítunk.</p>
     </div>
-    <table class="dance-table rv">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Tánc</th>
-          <th>Szint</th>
-          <th>Leírás</th>
-          <th style="text-align:right">Heti órák</th>
-        </tr>
-      </thead>
-      <tbody id="dances-tbody"></tbody>
-    </table>
+    <div class="dances-grid rv" id="dances-grid"></div>
   </div>
 </section>
 
@@ -271,16 +261,16 @@ document.addEventListener('keydown', e => {
 
 async function loadDances() {
   const { data } = await sb.from('dances').select('*').order('sort_order');
-  const tbody = document.getElementById('dances-tbody');
-  if (!data || !tbody) return;
-  tbody.innerHTML = data.map((d, i) => `
-    <tr>
-      <td class="td-num">${String(i + 1).padStart(2, '0')}</td>
-      <td class="td-name">${d.name}</td>
-      <td class="td-lvl"><span class="lvl-badge ${d.level_badge}">${d.level}</span></td>
-      <td class="td-desc">${d.description ?? ''}</td>
-      <td class="td-hours">${d.weekly_hours ?? ''}</td>
-    </tr>
+  const grid = document.getElementById('dances-grid');
+  if (!data || !grid) return;
+  grid.innerHTML = data.map(d => `
+    <div class="dance-card">
+      ${d.image_url ? `<img src="${d.image_url}" alt="${d.name}" class="dance-card-img">` : ''}
+      <div class="dance-card-body">
+        <div class="dance-card-name">${d.name}</div>
+        ${d.description ? `<p class="dance-card-desc">${d.description}</p>` : ''}
+      </div>
+    </div>
   `).join('');
 }
 

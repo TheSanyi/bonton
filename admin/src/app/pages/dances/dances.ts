@@ -7,17 +7,9 @@ interface Dance {
   id: string;
   sort_order: number;
   name: string;
-  level: string;
-  level_badge: string;
   description: string;
-  weekly_hours: string;
+  image_url: string;
 }
-
-const LEVELS = [
-  { level: 'Minden szint', level_badge: 'lb-all' },
-  { level: 'Kezdőknek',   level_badge: 'lb-k' },
-  { level: 'Haladóknak',  level_badge: 'lb-h' },
-];
 
 @Component({
   selector: 'app-dances',
@@ -38,9 +30,8 @@ const LEVELS = [
             <tr>
               <th>#</th>
               <th>Tánc</th>
-              <th>Szint</th>
-              <th>Leírás</th>
-              <th>Heti órák</th>
+              <th>Kép</th>
+              <th>Leírás / Történet</th>
               <th></th>
             </tr>
           </thead>
@@ -49,16 +40,21 @@ const LEVELS = [
               <tr>
                 <td class="td-order">{{ d.sort_order }}</td>
                 <td class="td-name">{{ d.name }}</td>
-                <td><span class="lvl-badge" [class]="d.level_badge">{{ d.level }}</span></td>
+                <td class="td-img">
+                  @if (d.image_url) {
+                    <img [src]="d.image_url" alt="" class="thumb">
+                  } @else {
+                    <span class="no-img">—</span>
+                  }
+                </td>
                 <td class="td-desc">{{ d.description }}</td>
-                <td class="td-hours">{{ d.weekly_hours }}</td>
                 <td class="td-actions">
                   <button class="btn-edit" (click)="openEdit(d)">Szerk.</button>
                   <button class="btn-del" (click)="deleteDance(d.id)">Törlés</button>
                 </td>
               </tr>
             } @empty {
-              <tr><td colspan="6" class="info">Még nincs tánc felvéve.</td></tr>
+              <tr><td colspan="5" class="info">Még nincs tánc felvéve.</td></tr>
             }
           </tbody>
         </table>
@@ -82,28 +78,33 @@ const LEVELS = [
                   <input type="number" formControlName="sort_order">
                 </div>
               </div>
-              <div class="form-row">
-                <div class="field">
-                  <label>Szint</label>
-                  <select (change)="onLevelChange($event)">
-                    @for (l of levels; track l.level_badge) {
-                      <option [value]="l.level" [selected]="form.value.level === l.level">{{ l.level }}</option>
+              <div class="field">
+                <label>Kép</label>
+                <div class="img-upload-wrap">
+                  @if (previewUrl()) {
+                    <img [src]="previewUrl()!" class="img-preview" alt="preview">
+                  } @else {
+                    <div class="img-placeholder">Nincs kép</div>
+                  }
+                  <div class="img-actions">
+                    <label class="btn-upload">
+                      {{ uploading() ? 'Feltöltés...' : 'Kép kiválasztása' }}
+                      <input type="file" accept="image/*" (change)="onFileChange($event)" [disabled]="uploading()">
+                    </label>
+                    @if (previewUrl()) {
+                      <button type="button" class="btn-del-img" (click)="removeImage()">Kép törlése</button>
                     }
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Heti órák</label>
-                  <input type="text" formControlName="weekly_hours" placeholder="pl. 2×/hét">
+                  </div>
                 </div>
               </div>
               <div class="field">
-                <label>Leírás</label>
-                <textarea formControlName="description" rows="3" placeholder="Rövid leírás a táncról..."></textarea>
+                <label>Leírás / Történet</label>
+                <textarea formControlName="description" rows="5" placeholder="A tánc eredete, története, jellemzői..."></textarea>
               </div>
               @if (error()) { <p class="error">{{ error() }}</p> }
               <div class="form-actions">
                 <button type="button" class="btn-ghost" (click)="closeForm()">Mégse</button>
-                <button type="submit" class="btn-primary" [disabled]="saving()">
+                <button type="submit" class="btn-primary" [disabled]="saving() || uploading()">
                   {{ saving() ? 'Mentés...' : 'Mentés' }}
                 </button>
               </div>
@@ -128,18 +129,21 @@ const LEVELS = [
     .dance-table tbody tr:hover { background: #fafafa; }
     .dance-table tbody td { padding: .9rem 1rem; vertical-align: middle; font-size: .88rem; }
     .td-order { color: #aaa; width: 40px; }
-    .td-name { font-weight: 700; color: #07102e; }
-    .td-desc { color: #555; font-size: .82rem; max-width: 320px; }
-    .td-hours { color: #888; white-space: nowrap; }
+    .td-name { font-weight: 700; color: #07102e; white-space: nowrap; }
+    .td-img { width: 80px; }
+    .thumb { width: 72px; height: 48px; object-fit: cover; display: block; border-radius: 2px; }
+    .no-img { color: #ccc; }
+    .td-desc { color: #555; font-size: .82rem; max-width: 480px; }
     .td-actions { white-space: nowrap; }
 
-    .lvl-badge {
-      font-size: .65rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
-      padding: .22rem .7rem; display: inline-block; border-radius: 2px;
-    }
-    .lb-all { border: 1px solid #aaa; color: #666; }
-    .lb-k   { border: 1px solid #ff2d8b; color: #c0006a; }
-    .lb-h   { border: 1px solid #e000ff; color: #9b00c9; }
+    .img-upload-wrap { display: flex; gap: 1rem; align-items: flex-start; }
+    .img-preview { width: 100px; height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
+    .img-placeholder { width: 100px; height: 100px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: .75rem; color: #aaa; }
+    .img-actions { display: flex; flex-direction: column; gap: .5rem; }
+    .btn-upload { display: inline-block; padding: .5rem .9rem; background: #f5f5f5; border: 1px solid #ddd; font-size: .78rem; cursor: pointer; border-radius: 2px; font-weight: 600; }
+    .btn-upload input[type=file] { display: none; }
+    .btn-upload:hover { background: #eee; }
+    .btn-del-img { padding: .4rem .9rem; background: #fff; border: 1px solid #f0c0c0; color: #c00; font-size: .75rem; cursor: pointer; border-radius: 2px; }
 
     .btn-edit, .btn-del {
       font-size: .7rem; padding: .22rem .6rem; border: 1px solid #ddd;
@@ -173,20 +177,19 @@ export class DancesComponent implements OnInit {
   dances = signal<Dance[]>([]);
   loading = signal(false);
   saving = signal(false);
+  uploading = signal(false);
   showForm = signal(false);
   editingId = signal<string | null>(null);
   error = signal('');
-  levels = LEVELS;
+  previewUrl = signal<string | null>(null);
   form: FormGroup;
 
   constructor(private sb: SupabaseService, private fb: FormBuilder) {
     this.form = this.fb.group({
-      name:         ['', Validators.required],
-      sort_order:   [0],
-      level:        [LEVELS[0].level],
-      level_badge:  [LEVELS[0].level_badge],
-      weekly_hours: [''],
-      description:  [''],
+      name:        ['', Validators.required],
+      sort_order:  [0],
+      image_url:   [null],
+      description: [''],
     });
   }
 
@@ -199,15 +202,10 @@ export class DancesComponent implements OnInit {
     this.loading.set(false);
   }
 
-  onLevelChange(e: globalThis.Event) {
-    const level = (e.target as HTMLSelectElement).value;
-    const opt = LEVELS.find(l => l.level === level)!;
-    this.form.patchValue({ level: opt.level, level_badge: opt.level_badge });
-  }
-
   openNew() {
     this.editingId.set(null);
-    this.form.reset({ sort_order: this.dances().length + 1, level: LEVELS[0].level, level_badge: LEVELS[0].level_badge });
+    this.form.reset({ sort_order: this.dances().length + 1 });
+    this.previewUrl.set(null);
     this.error.set('');
     this.showForm.set(true);
   }
@@ -215,11 +213,36 @@ export class DancesComponent implements OnInit {
   openEdit(d: Dance) {
     this.editingId.set(d.id);
     this.form.patchValue(d);
+    this.previewUrl.set(d.image_url);
     this.error.set('');
     this.showForm.set(true);
   }
 
   closeForm() { this.showForm.set(false); }
+
+  removeImage() {
+    this.previewUrl.set(null);
+    this.form.patchValue({ image_url: null });
+  }
+
+  async onFileChange(e: Event) {
+    const file = (e.target as HTMLInputElement).files?.[0];
+    if (!file) return;
+    this.uploading.set(true);
+    this.error.set('');
+    const ext = file.name.split('.').pop();
+    const path = `${Date.now()}.${ext}`;
+    const { error } = await this.sb.client.storage.from('dance-images').upload(path, file);
+    if (error) {
+      this.error.set('Feltöltési hiba: ' + error.message);
+      this.uploading.set(false);
+      return;
+    }
+    const { data } = this.sb.client.storage.from('dance-images').getPublicUrl(path);
+    this.previewUrl.set(data.publicUrl);
+    this.form.patchValue({ image_url: data.publicUrl });
+    this.uploading.set(false);
+  }
 
   async save() {
     if (this.form.invalid) return;

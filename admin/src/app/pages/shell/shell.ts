@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { DarkModeService } from '../../services/dark-mode.service';
 
 const NAV = [
   { path: 'schedule', label: 'Órarend' },
@@ -23,7 +24,12 @@ const NAV = [
             <a [routerLink]="item.path" routerLinkActive="active">{{ item.label }}</a>
           }
         </nav>
-        <button class="logout" (click)="auth.logout()">Kijelentkezés</button>
+        <div class="sidebar-bottom">
+          <button class="theme-toggle" (click)="dm.toggle()">
+            {{ dm.dark() ? '☀ Világos' : '☾ Sötét' }}
+          </button>
+          <button class="logout" (click)="auth.logout()">Kijelentkezés</button>
+        </div>
       </aside>
       <main class="content">
         <router-outlet />
@@ -59,8 +65,19 @@ const NAV = [
     }
     nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
     nav a.active { background: rgba(255,255,255,.1); color: #fff; }
+    .sidebar-bottom { padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: .5rem; }
+    .theme-toggle {
+      padding: .6rem;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.15);
+      color: rgba(255,255,255,.45);
+      font-size: .78rem;
+      cursor: pointer;
+      transition: border-color .15s, color .15s;
+      text-align: left;
+    }
+    .theme-toggle:hover { border-color: rgba(255,255,255,.4); color: #fff; }
     .logout {
-      margin: 1rem 1.5rem 0;
       padding: .6rem;
       background: transparent;
       border: 1px solid rgba(255,255,255,.2);
@@ -70,10 +87,10 @@ const NAV = [
       transition: border-color .15s, color .15s;
     }
     .logout:hover { border-color: rgba(255,255,255,.5); color: #fff; }
-    .content { flex: 1; background: #f5f5f5; padding: 2.5rem; overflow-y: auto; }
+    .content { flex: 1; background: #f5f5f5; padding: 2.5rem; overflow-y: auto; transition: background .2s; }
   `]
 })
 export class ShellComponent {
   nav = NAV;
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService, public dm: DarkModeService) {}
 }
