@@ -71,7 +71,7 @@ interface Dance {
             <form [formGroup]="form" (ngSubmit)="save()">
               <div class="form-row">
                 <div class="field">
-                  <label>Tánc neve</label>
+                  <label>Tánc neve <span class="req">*</span></label>
                   <input type="text" formControlName="name" placeholder="pl. Salsa">
                 </div>
                 <div class="field">

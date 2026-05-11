@@ -66,13 +66,20 @@
       <h2 class="sec-title">Egész éves <em>órarend</em></h2>
 <!--      <p class="sec-sub">Az órarend az egész tanévben változatlan. Minden óra 60 perces.</p>-->
     </div>
-    <div class="week-grid rv">
-      <div class="day-col"><div class="day-head"><div class="day-name">Hétfő</div></div><div class="day-slots" data-day="hetfo"></div></div>
-      <div class="day-col"><div class="day-head"><div class="day-name">Kedd</div></div><div class="day-slots" data-day="kedd"></div></div>
-      <div class="day-col"><div class="day-head"><div class="day-name">Szerda</div></div><div class="day-slots" data-day="szerda"></div></div>
-      <div class="day-col"><div class="day-head"><div class="day-name">Csütörtök</div></div><div class="day-slots" data-day="csutortok"></div></div>
-      <div class="day-col"><div class="day-head"><div class="day-name">Péntek</div></div><div class="day-slots" data-day="pentek"></div></div>
+    <div class="sched-scroll rv" id="sched-desktop">
+      <div class="week-grid">
+        <div class="time-axis-col">
+          <div class="day-head"></div>
+          <div class="time-axis" id="time-axis"></div>
+        </div>
+        <div class="day-col"><div class="day-head"><div class="day-name">Hétfő</div></div><div class="day-body" data-day="hetfo"></div></div>
+        <div class="day-col"><div class="day-head"><div class="day-name">Kedd</div></div><div class="day-body" data-day="kedd"></div></div>
+        <div class="day-col"><div class="day-head"><div class="day-name">Szerda</div></div><div class="day-body" data-day="szerda"></div></div>
+        <div class="day-col"><div class="day-head"><div class="day-name">Csütörtök</div></div><div class="day-body" data-day="csutortok"></div></div>
+        <div class="day-col"><div class="day-head"><div class="day-name">Péntek</div></div><div class="day-body" data-day="pentek"></div></div>
+      </div>
     </div>
+    <div class="sched-mobile rv" id="sched-mobile"></div>
     <p class="or-note rv">Magánórák egyéni egyeztetés alapján &mdash; lépj velünk kapcsolatba.</p>
   </div>
 </section>
@@ -158,12 +165,12 @@
       </div>
       <div class="kform">
         <div class="krow2">
-          <div class="kf"><label>Neved</label><input type="text" placeholder="Kiss Anna"></div>
-          <div class="kf"><label>E-mail</label><input type="email" placeholder="anna@email.hu"></div>
+          <div class="kf"><label>Neved</label><input id="k-name" type="text" placeholder="Kiss Anna"></div>
+          <div class="kf"><label>E-mail</label><input id="k-email" type="email" placeholder="anna@email.hu"></div>
         </div>
         <div class="kf">
           <label>Érdeklődés</label>
-          <select>
+          <select id="k-interest">
             <option>Csoportos óra</option>
             <option>Magánóra</option>
             <option>Esküvői tánc</option>
@@ -172,7 +179,8 @@
             <option>Egyéb</option>
           </select>
         </div>
-        <div class="kf"><label>Üzenet</label><textarea placeholder="Mikor érsz rá, mi a célod, milyen előképzettséged van..."></textarea></div>
+        <div class="kf"><label>Üzenet</label><textarea id="k-message" placeholder="Mikor érsz rá, mi a célod, milyen előképzettséged van..."></textarea></div>
+        <p id="k-feedback" style="font-size:.82rem;margin-bottom:.5rem;display:none"></p>
         <button class="ksend" id="ksend">Üzenet küldése</button>
       </div>
     </div>
@@ -282,23 +290,28 @@ async function loadEvents() {
   if (!data || !grid) return;
   grid.innerHTML = data.map(ev => {
     const d = new Date(ev.date);
+    const year = d.getUTCFullYear();
+    const mon = HU_MONTHS[d.getUTCMonth()];
     const day = String(d.getUTCDate()).padStart(2,'0');
-    const mon = HU_MONTHS[d.getUTCMonth()] + ' ' + d.getUTCFullYear();
     const typeClass = TYPE_CLASS[ev.type] ?? 'et-g';
     const btnClass  = TYPE_BTN[ev.type]   ?? 'btn-ev';
-    const btnLabel  = TYPE_LABEL[ev.type] ?? 'Részletek';
-    const imgHtml   = ev.image_url ? `<img src="${ev.image_url}" alt="${ev.title}" class="ev-card-img">` : '';
+    const btnLabel = TYPE_LABEL[ev.type] ?? 'Részletek';
+    const imgWrap = ev.image_url
+      ? `<div class="ev-img-wrap"><img src="${ev.image_url}" alt="${ev.title}" class="ev-card-img"><span class="ev-type ${typeClass}">${ev.type}</span></div>`
+      : `<div class="ev-img-wrap ev-img-empty"><span class="ev-type ${typeClass}">${ev.type}</span></div>`;
     return `
       <div class="ev-card">
-        ${imgHtml}
-        <div class="ev-top">
-          <span class="ev-type ${typeClass}">${ev.type}</span>
-          <div class="ev-date"><div class="ev-day">${day}</div><div class="ev-mon">${mon}</div></div>
+        ${imgWrap}
+        <div class="ev-body">
+          <div class="ev-date">${year}. ${mon} ${day}.${ev.time_info ? ` &middot; ${ev.time_info}` : ''}</div>
+          <div class="ev-title">${ev.title}</div>
+          <div class="ev-details">
+            ${ev.description ? `<p class="ev-desc">${ev.description}</p>` : ''}
+            ${ev.location ? `<div class="ev-loc">${ev.location}</div>` : ''}
+            <a href="#kapcsolat" class="${btnClass}">${btnLabel}</a>
+          </div>
+          <button class="ev-toggle" onclick="const c=this.closest('.ev-card');c.classList.toggle('open');this.textContent=c.classList.contains('open')?'▴ Bezárás':'▾ Részletek'">▾ Részletek</button>
         </div>
-        <div class="ev-title">${ev.title}</div>
-        ${ev.description ? `<p class="ev-desc">${ev.description}</p>` : ''}
-        <div class="ev-loc">${ev.location ?? ''}${ev.location && ev.time_info ? ' &middot; ' : ''}<span>${ev.time_info ?? ''}</span></div>
-        <a href="#kapcsolat" class="${btnClass}">${btnLabel}</a>
       </div>
     `;
   }).join('');
@@ -328,19 +341,85 @@ async function loadTeachers() {
 async function loadSchedule() {
   const { data } = await sb.from('schedule').select('*').order('sort_order').order('start_time');
   if (!data) return;
-  document.querySelectorAll('.day-slots[data-day]').forEach(col => {
+
+  const START = 16 * 60;
+  const TOTAL_MIN = (21 - 16) * 60; // 300 perc
+
+  function toMin(t) { const [h,m] = t.slice(0,5).split(':'); return +h * 60 + +m; }
+
+  // Megvárjuk a layout kiszámítását, majd kiolvassuk a magasságot
+  await new Promise(r => requestAnimationFrame(r));
+  const sampleBody = document.querySelector('.day-body[data-day]');
+  const TOTAL = sampleBody && sampleBody.offsetHeight > 0 ? sampleBody.offsetHeight : 600;
+  const PX = TOTAL / TOTAL_MIN;
+
+  // Időtengely
+  const axis = document.getElementById('time-axis');
+  if (axis) {
+    let axHtml = '';
+    for (let h = 16; h <= 21; h++) {
+      const top = Math.round((h * 60 - START) * PX);
+      const transform = h === 21 ? 'translateY(-100%)' : 'none';
+      axHtml += `<div class="time-label" style="top:${top}px;transform:${transform}">${h}:00</div>`;
+    }
+    axis.innerHTML = axHtml;
+  }
+
+  // Naposzlopok
+  document.querySelectorAll('.day-body[data-day]').forEach(col => {
     const day = col.dataset.day;
-    const slots = data.filter(s => s.day === day);
-    col.innerHTML = slots.map(s => `
-      <div class="slot">
-        <div class="slot-time">${s.start_time.slice(0,5)}&ndash;${s.end_time.slice(0,5)}</div>
-        <div class="slot-name">${s.name}</div>
-        ${s.meta ? `<div class="slot-meta">${s.meta}</div>` : ''}
-        <span class="slot-badge ${s.badge}">${s.badge_label}</span>
-      </div>
-    `).join('');
+    let html = '';
+    // óra-vonalak
+    for (let h = 16; h <= 21; h++) {
+      const top = h === 21 ? TOTAL - 1 : Math.round((h * 60 - START) * PX);
+      html += `<div class="sched-line" style="top:${top}px"></div>`;
+    }
+    // órák
+    data.filter(s => s.day === day).forEach(s => {
+      const top    = Math.round((toMin(s.start_time) - START) * PX);
+      const height = Math.max(Math.round((toMin(s.end_time) - toMin(s.start_time)) * PX), 28);
+      html += `
+        <div class="slot ${s.badge}" style="top:${top}px;height:${height}px">
+          <div class="slot-time">${s.start_time.slice(0,5)}&ndash;${s.end_time.slice(0,5)}</div>
+          <div class="slot-name">${s.name}</div>
+          ${s.meta ? `<div class="slot-meta">${s.meta}</div>` : ''}
+          <span class="slot-badge ${s.badge}">${s.badge_label}</span>
+        </div>`;
+    });
+    col.innerHTML = html;
   });
+
+  // Mobil nézet
+  const mobile = document.getElementById('sched-mobile');
+  if (mobile) {
+    mobile.innerHTML = DAY_ORDER.map(day => {
+      const slots = data.filter(s => s.day === day);
+      if (!slots.length) return '';
+      return `
+        <div class="sched-day">
+          <button class="sched-day-head" onclick="this.parentElement.classList.toggle('open')">
+            <span>${DAYS_HU[day]}</span>
+            <span class="sched-chevron">▾</span>
+          </button>
+          <div class="sched-day-slots">
+            ${slots.map(s => `
+              <div class="sched-slot-m">
+                <div class="sched-slot-time-m">${s.start_time.slice(0,5)}–${s.end_time.slice(0,5)}</div>
+                <div class="sched-slot-body-m">
+                  <div class="sched-slot-name-m">${s.name}</div>
+                  ${s.meta ? `<div class="sched-slot-meta-m">${s.meta}</div>` : ''}
+                </div>
+                <span class="slot-badge ${s.badge}">${s.badge_label}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>`;
+    }).filter(Boolean).join('');
+  }
 }
+
+const DAYS_HU={hetfo:'Hétfő',kedd:'Kedd',szerda:'Szerda',csutortok:'Csütörtök',pentek:'Péntek'};
+const DAY_ORDER=['hetfo','kedd','szerda','csutortok','pentek'];
 
 loadDances();
 loadGallery();
@@ -352,6 +431,7 @@ const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.tar
 document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 document.querySelectorAll('#hero .rv').forEach((el,i)=>{setTimeout(()=>el.classList.add('on'),80+i*100)});
 
+
 const hamburger=document.getElementById('hamburger');
 const navLinks=document.getElementById('nav-links');
 hamburger.addEventListener('click',()=>{
@@ -362,10 +442,49 @@ navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
   navLinks.classList.remove('open');
   hamburger.classList.remove('open');
 }));
-document.getElementById('ksend').addEventListener('click',function(){
-  const o=this.textContent;
-  this.textContent='Elküldve';this.style.background='var(--pink)';
-  setTimeout(()=>{this.textContent=o;this.style.background='';},3000);
+document.getElementById('ksend').addEventListener('click',async function(){
+  const name     = document.getElementById('k-name').value.trim();
+  const email    = document.getElementById('k-email').value.trim();
+  const interest = document.getElementById('k-interest').value;
+  const message  = document.getElementById('k-message').value.trim();
+  const feedback = document.getElementById('k-feedback');
+
+  if (!name || !email || !message) {
+    feedback.textContent = 'Kérjük töltsd ki a kötelező mezőket (név, e-mail, üzenet).';
+    feedback.style.color = 'var(--pink)';
+    feedback.style.display = 'block';
+    return;
+  }
+
+  this.textContent = 'Küldés...';
+  this.disabled = true;
+  feedback.style.display = 'none';
+
+  try {
+    const res = await fetch('https://vqsypzdilxdbfevtjgra.supabase.co/functions/v1/send-contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': 'sb_publishable_SRyG2313fl-Kx5SVhH179w_g28A_7HM' },
+      body: JSON.stringify({ name, email, interest, message }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error ?? 'Hiba');
+
+    feedback.textContent = 'Üzeneted megkaptuk, hamarosan válaszolunk!';
+    feedback.style.color = 'rgba(34,197,94,.9)';
+    feedback.style.display = 'block';
+    document.getElementById('k-name').value = '';
+    document.getElementById('k-email').value = '';
+    document.getElementById('k-message').value = '';
+    this.textContent = 'Elküldve ✓';
+    this.style.background = 'var(--pink)';
+    setTimeout(() => { this.textContent = 'Üzenet küldése'; this.style.background = ''; this.disabled = false; }, 4000);
+  } catch(e) {
+    feedback.textContent = 'Hiba történt: ' + e.message;
+    feedback.style.color = 'var(--pink)';
+    feedback.style.display = 'block';
+    this.textContent = 'Üzenet küldése';
+    this.disabled = false;
+  }
 });
 </script>
 </body>

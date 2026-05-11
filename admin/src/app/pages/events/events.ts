@@ -79,7 +79,7 @@ const TYPE_CLASS: Record<string, string> = {
             <form [formGroup]="form" (ngSubmit)="save()">
               <div class="form-row">
                 <div class="field">
-                  <label>Típus</label>
+                  <label>Típus <span class="req">*</span></label>
                   <select formControlName="type">
                     @for (t of eventTypes; track t) {
                       <option [value]="t">{{ t }}</option>
@@ -87,12 +87,12 @@ const TYPE_CLASS: Record<string, string> = {
                   </select>
                 </div>
                 <div class="field">
-                  <label>Dátum</label>
+                  <label>Dátum <span class="req">*</span></label>
                   <input type="date" formControlName="date">
                 </div>
               </div>
               <div class="field">
-                <label>Cím</label>
+                <label>Cím <span class="req">*</span></label>
                 <input type="text" formControlName="title" placeholder="pl. Latin Intenzív Workshop">
               </div>
               <div class="field">

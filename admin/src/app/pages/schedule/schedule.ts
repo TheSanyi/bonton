@@ -27,9 +27,9 @@ const DAYS = [
 const BADGE_OPTIONS = [
   { badge: 'sb-h', badge_label: 'Haladó' },
   { badge: 'sb-k', badge_label: 'Kezdő' },
-  { badge: 'sb-k', badge_label: 'Gyermek' },
+  { badge: 'sb-g', badge_label: 'Gyermek' },
   { badge: 'sb-p', badge_label: 'Vegyes' },
-  { badge: 'sb-p', badge_label: 'Egyéni' },
+  { badge: 'sb-e', badge_label: 'Egyéni' },
 ];
 
 @Component({
@@ -83,7 +83,7 @@ const BADGE_OPTIONS = [
             <form [formGroup]="form" (ngSubmit)="save()">
               <div class="form-row">
                 <div class="field">
-                  <label>Nap</label>
+                  <label>Nap <span class="req">*</span></label>
                   <select formControlName="day">
                     @for (d of days; track d.value) {
                       <option [value]="d.value">{{ d.label }}</option>
@@ -97,16 +97,16 @@ const BADGE_OPTIONS = [
               </div>
               <div class="form-row">
                 <div class="field">
-                  <label>Kezdés</label>
+                  <label>Kezdés <span class="req">*</span></label>
                   <input type="time" formControlName="start_time">
                 </div>
                 <div class="field">
-                  <label>Befejezés</label>
+                  <label>Befejezés <span class="req">*</span></label>
                   <input type="time" formControlName="end_time">
                 </div>
               </div>
               <div class="field">
-                <label>Megnevezés</label>
+                <label>Megnevezés <span class="req">*</span></label>
                 <input type="text" formControlName="name" placeholder="pl. Latin technika haladó">
               </div>
               <div class="field">
@@ -162,9 +162,11 @@ const BADGE_OPTIONS = [
       display: inline-block; font-size: .65rem; font-weight: 700;
       padding: .15rem .5rem; border-radius: 2px; margin-bottom: .5rem;
     }
-    .sb-h { background: rgba(224,0,255,.12); color: #9b00c9; }
-    .sb-k { background: rgba(255,45,139,.12); color: #c0006a; }
-    .sb-p { background: #f0f0f0; color: #555; }
+    .sb-h { background: rgba(224,0,255,.15); color: #9b00c9; }
+    .sb-k { background: rgba(251,146,60,.15); color: #c2410c; }
+    .sb-g { background: rgba(34,197,94,.15);  color: #15803d; }
+    .sb-p { background: rgba(234,179,8,.15); color: #854d0e; }
+    .sb-e { background: rgba(96,165,250,.15); color: #1d4ed8; }
     .slot-actions { display: flex; gap: .4rem; margin-top: .4rem; }
     .btn-edit, .btn-del {
       font-size: .7rem; padding: .25rem .6rem; border: 1px solid #ddd;

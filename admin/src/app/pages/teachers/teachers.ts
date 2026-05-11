@@ -93,11 +93,11 @@ interface Teacher {
               </div>
 
               <div class="field">
-                <label>Teljes név</label>
+                <label>Teljes név <span class="req">*</span></label>
                 <input type="text" formControlName="name" placeholder="Kovács Ágnes">
               </div>
               <div class="field">
-                <label>Szerepkör</label>
+                <label>Szerepkör <span class="req">*</span></label>
                 <input type="text" formControlName="role" placeholder="Salsa & Bachata">
               </div>
               <div class="field">
