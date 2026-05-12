@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bérletek — Bonton Tánc Sport Egyesület</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-main">Bonton</span>
+      <span class="nav-logo-sub">Tánc Sport Egyesület</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#tortenet">Rólunk</a></li>
+      <li><a href="index.html#tancok">Táncok</a></li>
+      <li><a href="index.html#orarend">Órarend</a></li>
+      <li><a href="index.html#esemenyek">Események</a></li>
+      <li><a href="index.html#galeria">Galéria</a></li>
+      <li><a href="index.html#tanarok">Tanárok</a></li>
+      <li><a href="index.html#kapcsolat">Kapcsolat</a></li>
+      <li><a href="berletek.html" class="nav-active">Bérletek</a></li>
+      <li><a href="dokumentumok.html">Dokumentumok</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<section class="doc-hero">
+  <div class="doc-hero-inner">
+    <p class="sec-kicker rv">Online vásárlás</p>
+    <h1 class="doc-hero-title rv">Bérletek</h1>
+    <p class="doc-hero-sub rv">Vásárolj bérletet online, biztonságos kártyás fizetéssel. A fizetés után emailben küldünk visszaigazolást.</p>
+  </div>
+</section>
+
+<!-- BÉRLETEK -->
+<section class="sec doc-sec">
+  <div class="sec-inner">
+    <div id="pass-container">
+      <p class="doc-loading">Betöltés...</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIKER / MEGSZAKÍTÁS ÜZENET -->
+<div class="pay-toast" id="pay-toast"></div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="f-logo">
+    <span class="f-logo-main">Bonton</span>
+    <span class="f-logo-sub">Tánc Sport Egyesület</span>
+  </a>
+  <ul class="f-links">
+    <li><a href="index.html#tancok">Táncok</a></li>
+    <li><a href="index.html#orarend">Órarend</a></li>
+    <li><a href="index.html#esemenyek">Események</a></li>
+    <li><a href="index.html#galeria">Galéria</a></li>
+    <li><a href="index.html#tanarok">Tanárok</a></li>
+    <li><a href="index.html#kapcsolat">Kapcsolat</a></li>
+    <li><a href="berletek.html">Bérletek</a></li>
+    <li><a href="dokumentumok.html">Dokumentumok</a></li>
+  </ul>
+  <p class="f-copy">Érd, 2026 &mdash; Minden jog fenntartva</p>
+  <div class="theme-picker" id="theme-picker">
+    <button class="theme-dot active" data-theme="" style="background:#07102e" title="Éjkék"></button>
+    <button class="theme-dot" data-theme="theme-emerald" style="background:#00c853" title="Smaragd"></button>
+    <button class="theme-dot" data-theme="theme-sunset" style="background:#ff9100" title="Napnyugta"></button>
+    <button class="theme-dot" data-theme="theme-galaxy" style="background:#ce93d8" title="Galaxis"></button>
+    <button class="theme-dot" data-theme="theme-rose" style="background:#ff2d8b" title="Rózsa"></button>
+    <button class="theme-dot" data-theme="theme-ocean" style="background:#00b4d8" title="Óceán"></button>
+    <button class="theme-dot" data-theme="theme-gold" style="background:#ffc107" title="Arany"></button>
+    <button class="theme-dot" data-theme="theme-coral" style="background:#ff6b47" title="Korall"></button>
+    <button class="theme-dot" data-theme="theme-slate" style="background:#6c8ebf" title="Pala"></button>
+    <button class="theme-dot" data-theme="theme-teal" style="background:#00bfa5" title="Türkiz"></button>
+    <button class="theme-dot" data-theme="theme-wine" style="background:#ef5350" title="Bor"></button>
+    <button class="theme-dot" data-theme="theme-neon" style="background:#39ff14" title="Neon"></button>
+    <button class="theme-dot" data-theme="theme-fire" style="background:#ff3d00" title="Tűz"></button>
+    <button class="theme-dot" data-theme="theme-thunder" style="background:#ffea00" title="Villám"></button>
+    <button class="theme-dot" data-theme="theme-plasma" style="background:#ff00ff" title="Plazma"></button>
+    <button class="theme-dot" data-theme="theme-matrix" style="background:#00ff41" title="Matrix"></button>
+    <button class="theme-dot" data-theme="theme-lavender" style="background:#b39ddb" title="Levendula"></button>
+    <button class="theme-dot" data-theme="theme-mint" style="background:#80cbc4" title="Menta"></button>
+    <button class="theme-dot" data-theme="theme-peach" style="background:#ffab91" title="Barack"></button>
+    <button class="theme-dot" data-theme="theme-sky" style="background:#90caf9" title="Égszín"></button>
+    <button class="theme-dot" data-theme="theme-vanilla" style="background:#ffe082" title="Vanília"></button>
+    <button class="theme-dot" data-theme="theme-cyberpunk" style="background:#ffe600" title="Cyberpunk"></button>
+    <button class="theme-dot" data-theme="theme-acid" style="background:#aaff00" title="Acid"></button>
+    <button class="theme-dot" data-theme="theme-vaporwave" style="background:#00e5ff" title="Vaporwave"></button>
+    <button class="theme-dot" data-theme="theme-halloween" style="background:#ff6a00" title="Halloween"></button>
+  </div>
+  <button class="theme-btn" id="theme-btn" aria-label="Téma váltás">☀</button>
+</footer>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const sb = createClient(
+  'https://vqsypzdilxdbfevtjgra.supabase.co',
+  'sb_publishable_SRyG2313fl-Kx5SVhH179w_g28A_7HM'
+);
+
+// Stripe visszatérés kezelése
+const params = new URLSearchParams(location.search);
+const toast = document.getElementById('pay-toast');
+if (params.get('success') === '1') {
+  toast.textContent = '✓ Sikeres fizetés! Hamarosan emailt kapsz a visszaigazolásról.';
+  toast.classList.add('show', 'success');
+  setTimeout(() => toast.classList.remove('show'), 6000);
+  history.replaceState({}, '', location.pathname);
+}
+if (params.get('cancelled') === '1') {
+  toast.textContent = 'A fizetés megszakadt. Próbáld újra.';
+  toast.classList.add('show', 'error');
+  setTimeout(() => toast.classList.remove('show'), 5000);
+  history.replaceState({}, '', location.pathname);
+}
+
+async function loadPasses() {
+  const { data } = await sb.from('pass_types').select('*').eq('active', true).order('sort_order');
+  const container = document.getElementById('pass-container');
+  if (!data?.length) {
+    container.innerHTML = '<p class="doc-empty">Jelenleg nincs elérhető bérlet.</p>';
+    return;
+  }
+
+  const havi    = data.filter(p => p.type === 'havi');
+  const alkalom = data.filter(p => p.type === 'alkalom');
+
+  let html = '';
+
+  if (havi.length) {
+    html += `
+      <div class="pass-section rv">
+        <h2 class="pass-section-title">Havi bérletek</h2>
+        <div class="pass-grid">
+          ${havi.map(p => passCard(p)).join('')}
+        </div>
+      </div>`;
+  }
+
+  if (alkalom.length) {
+    html += `
+      <div class="pass-section rv">
+        <h2 class="pass-section-title">Magánóra</h2>
+        <div class="pass-grid">
+          ${alkalom.map(p => passCard(p)).join('')}
+        </div>
+      </div>`;
+  }
+
+  container.innerHTML = html;
+  document.querySelectorAll('.rv').forEach(el => el.classList.add('on'));
+
+  container.querySelectorAll('.pass-buy-btn').forEach(btn => {
+    btn.addEventListener('click', () => startCheckout(btn.dataset.id, btn.dataset.name, btn.dataset.price));
+  });
+}
+
+function passCard(p) {
+  return `
+    <div class="pass-card">
+      <div class="pass-type-badge ${p.type === 'havi' ? 'badge-havi' : 'badge-alkalom'}">
+        ${p.type === 'havi' ? 'Havi' : 'Alkalom'}
+      </div>
+      <div class="pass-name">${p.name}</div>
+      ${p.description ? `<p class="pass-desc">${p.description}</p>` : ''}
+      <div class="pass-price">${Number(p.price).toLocaleString('hu-HU')} Ft</div>
+      <button class="pass-buy-btn btn-uv" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}">
+        Megvásárlom
+      </button>
+    </div>`;
+}
+
+async function startCheckout(passTypeId, passName, price) {
+  // Stripe Edge Function hívás — implementálás a Stripe kulcsok megadása után
+  alert('A Stripe fizetési integráció hamarosan elérhető.');
+}
+
+loadPasses();
+
+// Hamburger
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
+});
+
+// Témaválasztó
+const COLOR_THEMES=['','theme-emerald','theme-sunset','theme-galaxy','theme-rose','theme-ocean','theme-gold','theme-coral','theme-slate','theme-teal','theme-wine','theme-neon','theme-fire','theme-thunder','theme-plasma','theme-matrix','theme-lavender','theme-mint','theme-peach','theme-sky','theme-vanilla','theme-cyberpunk','theme-acid','theme-vaporwave','theme-halloween'];
+function applyColorTheme(t){
+  document.body.classList.remove(...COLOR_THEMES.filter(x=>x));
+  if(t) document.body.classList.add(t);
+  localStorage.setItem('site-color-theme',t);
+  document.querySelectorAll('.theme-dot').forEach(b=>b.classList.toggle('active',b.dataset.theme===t));
+}
+applyColorTheme(localStorage.getItem('site-color-theme')||'');
+document.querySelectorAll('.theme-dot').forEach(b=>b.addEventListener('click',()=>applyColorTheme(b.dataset.theme)));
+
+const themeBtn = document.getElementById('theme-btn');
+if (localStorage.getItem('site-theme') === 'light') {
+  document.body.classList.add('light');
+  themeBtn.textContent = '☾';
+}
+themeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('light');
+  const isLight = document.body.classList.contains('light');
+  localStorage.setItem('site-theme', isLight ? 'light' : 'dark');
+  themeBtn.textContent = isLight ? '☾' : '☀';
+});
+</script>
+</body>
+</html>
