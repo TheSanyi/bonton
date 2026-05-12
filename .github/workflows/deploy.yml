@@ -30,6 +30,8 @@ jobs:
           mkdir -p deploy/admin
           cp index.html deploy/
           cp style.css deploy/
+          cp berletek.html deploy/
+          cp dokumentumok.html deploy/
           cp -r admin/dist/admin/browser/. deploy/admin/
           cp deploy/admin/index.html deploy/admin/404.html
 
