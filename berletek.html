@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dokumentumok — Bonton Tánc Sport Egyesület</title>
+<title>Bérletek — Bonton Tánc Sport Egyesület</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -24,8 +24,8 @@
       <li><a href="index.html#galeria">Galéria</a></li>
       <li><a href="index.html#tanarok">Tanárok</a></li>
       <li><a href="index.html#kapcsolat">Kapcsolat</a></li>
-      <li><a href="berletek.html">Bérletek</a></li>
-      <li><a href="dokumentumok.html" class="nav-active">Dokumentumok</a></li>
+      <li><a href="berletek.html" class="nav-active">Bérletek</a></li>
+      <li><a href="dokumentumok.html">Dokumentumok</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Menü">
       <span></span><span></span><span></span>
@@ -36,20 +36,23 @@
 <!-- HEADER -->
 <section class="doc-hero">
   <div class="doc-hero-inner">
-    <p class="sec-kicker rv">Közhasznú információk</p>
-    <h1 class="doc-hero-title rv">Dokumentumok</h1>
-    <p class="doc-hero-sub rv">Az egyesület közhasznúsági és jogi dokumentumai nyilvánosan elérhetők.</p>
+    <p class="sec-kicker rv">Online vásárlás</p>
+    <h1 class="doc-hero-title rv">Bérletek</h1>
+    <p class="doc-hero-sub rv">Vásárolj bérletet online, biztonságos kártyás fizetéssel. A fizetés után emailben küldünk visszaigazolást.</p>
   </div>
 </section>
 
-<!-- DOKUMENTUMOK -->
+<!-- BÉRLETEK -->
 <section class="sec doc-sec">
   <div class="sec-inner">
-    <div id="doc-list" class="doc-list">
+    <div id="pass-container">
       <p class="doc-loading">Betöltés...</p>
     </div>
   </div>
 </section>
+
+<!-- SIKER / MEGSZAKÍTÁS ÜZENET -->
+<div class="pay-toast" id="pay-toast"></div>
 
 <!-- FOOTER -->
 <footer>
@@ -64,6 +67,7 @@
     <li><a href="index.html#galeria">Galéria</a></li>
     <li><a href="index.html#tanarok">Tanárok</a></li>
     <li><a href="index.html#kapcsolat">Kapcsolat</a></li>
+    <li><a href="berletek.html">Bérletek</a></li>
     <li><a href="dokumentumok.html">Dokumentumok</a></li>
   </ul>
   <p class="f-copy">Érd, 2026 &mdash; Minden jog fenntartva</p>
@@ -105,59 +109,89 @@ const sb = createClient(
   'sb_publishable_SRyG2313fl-Kx5SVhH179w_g28A_7HM'
 );
 
-async function loadDocs() {
-  const { data } = await sb.from('documents').select('*').order('category').order('sort_order').order('year', { ascending: false });
-  const list = document.getElementById('doc-list');
+// Stripe visszatérés kezelése
+const params = new URLSearchParams(location.search);
+const toast = document.getElementById('pay-toast');
+if (params.get('success') === '1') {
+  toast.textContent = '✓ Sikeres fizetés! Hamarosan emailt kapsz a visszaigazolásról.';
+  toast.classList.add('show', 'success');
+  setTimeout(() => toast.classList.remove('show'), 6000);
+  history.replaceState({}, '', location.pathname);
+}
+if (params.get('cancelled') === '1') {
+  toast.textContent = 'A fizetés megszakadt. Próbáld újra.';
+  toast.classList.add('show', 'error');
+  setTimeout(() => toast.classList.remove('show'), 5000);
+  history.replaceState({}, '', location.pathname);
+}
+
+async function loadPasses() {
+  const { data } = await sb.from('pass_types').select('*').eq('active', true).order('sort_order');
+  const container = document.getElementById('pass-container');
   if (!data?.length) {
-    list.innerHTML = '<p class="doc-empty">Jelenleg nincs feltöltött dokumentum.</p>';
+    container.innerHTML = '<p class="doc-empty">Jelenleg nincs elérhető bérlet.</p>';
     return;
   }
 
-  const groups = {};
-  data.forEach(d => {
-    if (!groups[d.category]) groups[d.category] = [];
-    groups[d.category].push(d);
-  });
+  const havi    = data.filter(p => p.type === 'havi');
+  const alkalom = data.filter(p => p.type === 'alkalom');
 
-  list.innerHTML = Object.entries(groups).map(([cat, docs]) => `
-    <div class="doc-group rv">
-      <h2 class="doc-cat">${cat}</h2>
-      <div class="doc-rows">
-        ${docs.map(d => `
-          <a class="doc-row" href="${d.file_url}" target="_blank" rel="noopener">
-            <span class="doc-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-            </span>
-            <span class="doc-name">
-              ${d.title}
-              ${d.year ? `<span class="doc-year">${d.year}</span>` : ''}
-            </span>
-            <span class="doc-dl">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Letöltés
-            </span>
-          </a>`).join('')}
-      </div>
-    </div>`).join('');
+  let html = '';
 
+  if (havi.length) {
+    html += `
+      <div class="pass-section rv">
+        <h2 class="pass-section-title">Havi bérletek</h2>
+        <div class="pass-grid">
+          ${havi.map(p => passCard(p)).join('')}
+        </div>
+      </div>`;
+  }
+
+  if (alkalom.length) {
+    html += `
+      <div class="pass-section rv">
+        <h2 class="pass-section-title">Magánóra</h2>
+        <div class="pass-grid">
+          ${alkalom.map(p => passCard(p)).join('')}
+        </div>
+      </div>`;
+  }
+
+  container.innerHTML = html;
   document.querySelectorAll('.rv').forEach(el => el.classList.add('on'));
+
+  container.querySelectorAll('.pass-buy-btn').forEach(btn => {
+    btn.addEventListener('click', () => startCheckout(btn.dataset.id, btn.dataset.name, btn.dataset.price));
+  });
 }
 
-loadDocs();
+function passCard(p) {
+  return `
+    <div class="pass-card">
+      <div class="pass-type-badge ${p.type === 'havi' ? 'badge-havi' : 'badge-alkalom'}">
+        ${p.type === 'havi' ? 'Havi' : 'Alkalom'}
+      </div>
+      <div class="pass-name">${p.name}</div>
+      ${p.description ? `<p class="pass-desc">${p.description}</p>` : ''}
+      <div class="pass-price">${Number(p.price).toLocaleString('hu-HU')} Ft</div>
+      <button class="pass-buy-btn btn-uv" data-id="${p.id}" data-name="${p.name}" data-price="${p.price}">
+        Megvásárlom
+      </button>
+    </div>`;
+}
+
+async function startCheckout(passTypeId, passName, price) {
+  // Stripe Edge Function hívás — implementálás a Stripe kulcsok megadása után
+  alert('A Stripe fizetési integráció hamarosan elérhető.');
+}
+
+loadPasses();
 
 // Hamburger
-const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('nav-links');
-hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-  hamburger.classList.toggle('open');
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('nav-links').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
 });
 
 // Témaválasztó

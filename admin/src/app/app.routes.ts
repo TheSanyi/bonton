@@ -14,7 +14,9 @@ export const routes: Routes = [
       { path: 'dances',   loadComponent: () => import('./pages/dances/dances').then(m => m.DancesComponent) },
       { path: 'gallery',  loadComponent: () => import('./pages/gallery/gallery').then(m => m.GalleryComponent) },
       { path: 'about',     loadComponent: () => import('./pages/about/about').then(m => m.AboutComponent) },
-      { path: 'documents', loadComponent: () => import('./pages/documents/documents').then(m => m.DocumentsComponent) },
+      { path: 'documents',  loadComponent: () => import('./pages/documents/documents').then(m => m.DocumentsComponent) },
+      { path: 'pass-types', loadComponent: () => import('./pages/pass-types/pass-types').then(m => m.PassTypesComponent) },
+      { path: 'purchases',  loadComponent: () => import('./pages/purchases/purchases').then(m => m.PurchasesComponent) },
       { path: '', redirectTo: 'schedule', pathMatch: 'full' }
     ]
   },

@@ -11,7 +11,9 @@ const NAV = [
   { path: 'events',   label: 'Események' },
   { path: 'dances',   label: 'Táncok' },
   { path: 'gallery',   label: 'Galéria' },
-  { path: 'documents', label: 'Dokumentumok' },
+  { path: 'documents',  label: 'Dokumentumok' },
+  { path: 'pass-types', label: 'Bérlettípusok' },
+  { path: 'purchases',  label: 'Vásárlások' },
 ];
 
 @Component({

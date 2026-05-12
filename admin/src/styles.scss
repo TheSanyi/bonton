@@ -305,6 +305,73 @@ body.dark .item-sub {
   color: #4d5c80;
 }
 
+/* ── Pass types ── */
+body.dark .pt-row {
+  background: #131929;
+  border-color: #1e2a45;
+}
+
+body.dark .pt-name { color: #e8eaf0; }
+body.dark .pt-desc { color: #4d5c80; }
+body.dark .pt-price { color: #e8eaf0; }
+body.dark .pt-status { color: #4d5c80; }
+
+body.dark .badge-alkalom {
+  background: rgba(255,255,255,.06);
+  color: #8a97b8;
+}
+
+body.dark .type-btn {
+  background: #0f1525;
+  border-color: #253158;
+  color: #8a97b8;
+}
+body.dark .type-btn:hover { border-color: #e000ff; color: #e8eaf0; }
+body.dark .type-btn.active { background: #e000ff; border-color: #e000ff; color: #fff; }
+
+body.dark .toggle-label { color: #8a97b8; }
+
+/* ── Purchases ── */
+body.dark .filter-tab {
+  background: #131929;
+  border-color: #1e2a45;
+  color: #4d5c80;
+}
+body.dark .filter-tab.active {
+  background: #e000ff;
+  border-color: #e000ff;
+  color: #fff;
+}
+body.dark .search {
+  background: #0f1525;
+  border-color: #253158;
+  color: #e8eaf0;
+}
+body.dark .search:focus { border-color: #e000ff; }
+
+body.dark .pur-row {
+  background: #131929;
+  border-color: #1e2a45;
+}
+body.dark .pur-name { color: #e8eaf0; }
+body.dark .pur-email { color: #4d5c80; }
+body.dark .pur-pass-name { color: #8a97b8; }
+body.dark .pur-price { color: #4d5c80; }
+body.dark .pur-val-dates { color: #8a97b8; }
+body.dark .pur-date { color: #3d4f72; }
+
+body.dark .stat-n { color: #e8eaf0; }
+
+body.dark .btn-mark-paid {
+  background: rgba(34,197,94,.1);
+  border-color: rgba(34,197,94,.25);
+}
+body.dark .btn-mark-pending {
+  background: #131929;
+  border-color: #253158;
+  color: #4d5c80;
+}
+
 /* ── Documents ── */
 body.dark .doc-row {
   background: #131929;
