@@ -13,6 +13,7 @@ export const routes: Routes = [
       { path: 'events',   loadComponent: () => import('./pages/events/events').then(m => m.EventsComponent) },
       { path: 'dances',   loadComponent: () => import('./pages/dances/dances').then(m => m.DancesComponent) },
       { path: 'gallery',  loadComponent: () => import('./pages/gallery/gallery').then(m => m.GalleryComponent) },
+      { path: 'about',    loadComponent: () => import('./pages/about/about').then(m => m.AboutComponent) },
       { path: '', redirectTo: 'schedule', pathMatch: 'full' }
     ]
   },

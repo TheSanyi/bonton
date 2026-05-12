@@ -276,3 +276,48 @@ body.dark .btn-del-img {
 body.dark .info {
   color: #4d5c80;
 }
+
+/* ── About ── */
+body.dark .section-card {
+  background: #131929;
+  border-color: #1e2a45;
+}
+
+body.dark .section-title {
+  color: #e8eaf0;
+  border-color: #1e2a45;
+}
+
+body.dark .item-row {
+  background: #0f1525;
+  border-color: #1e2a45;
+}
+
+body.dark .item-title {
+  color: #e8eaf0;
+}
+
+body.dark .item-quote {
+  color: #8a97b8;
+}
+
+body.dark .item-sub {
+  color: #4d5c80;
+}
+
+body.dark .col-btn {
+  background: #0f1525;
+  border-color: #253158;
+  color: #8a97b8;
+}
+
+body.dark .col-btn:hover {
+  border-color: #e000ff;
+  color: #e8eaf0;
+}
+
+body.dark .col-btn.active {
+  background: #e000ff;
+  border-color: #e000ff;
+  color: #fff;
+}

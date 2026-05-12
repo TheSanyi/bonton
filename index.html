@@ -17,6 +17,7 @@
       <span class="nav-logo-sub">Tánc Sport Egyesület</span>
     </a>
     <ul class="nav-links" id="nav-links">
+      <li><a href="#tortenet">Rólunk</a></li>
       <li><a href="#tancok">Táncok</a></li>
       <li><a href="#orarend">Órarend</a></li>
       <li><a href="#esemenyek">Események</a></li>
@@ -42,6 +43,20 @@
     <div class="hero-btns rv d3">
       <a href="#orarend" class="btn-uv">Órarend</a>
       <a href="#esemenyek" class="btn-ghost">Események</a>
+    </div>
+  </div>
+</section>
+
+<!-- TORTENET -->
+<section id="tortenet" class="sec">
+  <div class="sec-inner">
+    <div class="sec-head rv">
+      <p class="sec-kicker">Rólunk</p>
+      <h2 class="sec-title" id="about-title">A Bonton <em>története</em></h2>
+      <p class="sec-sub" id="about-intro">Csatlakozz egy olyan közösséghez, ahol a tánc több mint mozgás — életforma, szenvedély és barátság egyszerre.</p>
+    </div>
+    <div class="rv">
+<div class="about-testimonials" id="about-testimonials"></div>
     </div>
   </div>
 </section>
@@ -132,30 +147,45 @@
 <!-- ÜZENET -->
 <section id="uzenet" class="sec">
   <div class="sec-inner">
-    <div class="sec-head rv">
-      <p class="sec-kicker">Kapcsolat</p>
-      <h2 class="sec-title">Írj <em>nekünk</em></h2>
-    </div>
-    <div class="kform-wrap rv">
-      <div class="kform">
-        <div class="krow2">
-          <div class="kf"><label>Neved</label><input id="k-name" type="text" placeholder="Kiss Anna"></div>
-          <div class="kf"><label>E-mail</label><input id="k-email" type="email" placeholder="anna@email.hu"></div>
+    <div class="uzenet-grid">
+      <div class="uzenet-left rv">
+        <p class="sec-kicker">TODO: Ide kell egy cím</p>
+        <h2 class="sec-title">Írj <em>nekünk</em></h2>
+        <p class="uzenet-desc">Kérdésed van, szeretnél csatlakozni, vagy csak érdeklődsz? Örömmel válaszolunk bármilyen kérdésedre.</p>
+        <div class="uzenet-meta">
+          <div class="uzenet-m">
+            <span class="uzenet-m-lbl">E-mail</span>
+            <span class="uzenet-m-val">info@bontontse.hu</span>
+          </div>
+          <div class="uzenet-m">
+            <span class="uzenet-m-lbl">Telefon</span>
+            <span class="uzenet-m-val">+36 1 234 5678</span>
+          </div>
         </div>
-        <div class="kf">
-          <label>Érdeklődés</label>
-          <select id="k-interest">
-            <option>Csoportos óra</option>
-            <option>Magánóra</option>
-            <option>Esküvői tánc</option>
-            <option>Gyermektánc</option>
-            <option>Esemény</option>
-            <option>Egyéb</option>
-          </select>
+      </div>
+      <div class="uzenet-right rv">
+        <div class="kform-card">
+          <div class="kform">
+            <div class="krow2">
+              <div class="kf"><label>Neved</label><input id="k-name" type="text" placeholder="Kiss Anna"></div>
+              <div class="kf"><label>E-mail</label><input id="k-email" type="email" placeholder="anna@email.hu"></div>
+            </div>
+            <div class="kf">
+              <label>Érdeklődés</label>
+              <select id="k-interest">
+                <option>Csoportos óra</option>
+                <option>Magánóra</option>
+                <option>Esküvői tánc</option>
+                <option>Gyermektánc</option>
+                <option>Esemény</option>
+                <option>Egyéb</option>
+              </select>
+            </div>
+            <div class="kf"><label>Üzenet</label><textarea id="k-message" placeholder="Mikor érsz rá, mi a célod, milyen előképzettséged van..."></textarea></div>
+            <p id="k-feedback" style="font-size:.82rem;margin-bottom:.5rem;display:none"></p>
+            <button class="ksend" id="ksend">Üzenet küldése &#8594;</button>
+          </div>
         </div>
-        <div class="kf"><label>Üzenet</label><textarea id="k-message" placeholder="Mikor érsz rá, mi a célod, milyen előképzettséged van..."></textarea></div>
-        <p id="k-feedback" style="font-size:.82rem;margin-bottom:.5rem;display:none"></p>
-        <button class="ksend" id="ksend">Üzenet küldése</button>
       </div>
     </div>
   </div>
@@ -165,13 +195,20 @@
 <section id="kapcsolat" class="sec">
   <div class="sec-inner">
     <div class="sec-head rv">
-      <p class="sec-kicker">Elérhetőségek</p>
+      <p class="sec-kicker">Kapcsolat</p>
       <h2 class="sec-title">Hol <em>találsz</em> minket</h2>
+    </div>
+    <div class="k-map rv">
+      <iframe
+        src="https://maps.google.com/maps?q=2030+%C3%89rd,+Feh%C3%A9rv%C3%A1ri+%C3%BAt+63&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        width="100%" height="100%" style="border:0" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Bonton Táncsport-egyesület helyszíne">
+      </iframe>
     </div>
     <div class="k-cards rv">
       <div class="k-card">
         <span class="k-label">Cím</span>
-        <div class="k-val">2030 Érd<br>Fehérvári út 63.</div>
+        <div class="k-val">2030 Érd, Fehérvári út 63.</div>
       </div>
       <div class="k-card">
         <span class="k-label">E-mail</span>
@@ -181,17 +218,6 @@
         <span class="k-label">Telefon</span>
         <div class="k-val">+36 1 234 5678</div>
       </div>
-      <div class="k-card">
-        <span class="k-label">Nyitvatartás</span>
-        <div class="k-val" style="font-size:.92rem;line-height:1.9">H – P: 14:00 – 22:00<br>Szo: 10:00 – 15:00</div>
-      </div>
-    </div>
-    <div class="k-map rv">
-      <iframe
-        src="https://maps.google.com/maps?q=2030+%C3%89rd,+Feh%C3%A9rv%C3%A1ri+%C3%BAt+63&t=&z=15&ie=UTF8&iwloc=&output=embed"
-        width="100%" height="100%" style="border:0" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade" title="Bonton Táncsport-egyesület helyszíne">
-      </iframe>
     </div>
   </div>
 </section>
@@ -458,6 +484,95 @@ async function loadSchedule() {
 const DAYS_HU={hetfo:'Hétfő',kedd:'Kedd',szerda:'Szerda',csutortok:'Csütörtök',pentek:'Péntek'};
 const DAY_ORDER=['hetfo','kedd','szerda','csutortok','pentek'];
 
+async function loadAbout() {
+  const [{ data: meta }, { data: testimonials }] = await Promise.all([
+    sb.from('about').select('intro, title, carousel_columns').limit(1).single(),
+    sb.from('about_testimonials').select('*').order('sort_order'),
+  ]);
+
+  if (meta?.title) {
+    const el = document.getElementById('about-title');
+    if (el) el.textContent = meta.title;
+  }
+  if (meta?.intro) {
+    const el = document.getElementById('about-intro');
+    if (el) el.textContent = meta.intro;
+  }
+
+  const tList = document.getElementById('about-testimonials');
+  if (tList && testimonials?.length) {
+    const cfgCols = Math.min(meta?.carousel_columns ?? 1, testimonials.length);
+    const total = testimonials.length;
+
+    tList.innerHTML = `
+      <div class="tc-track" id="tc-track">
+        ${testimonials.map(t => `
+          <div class="about-testimonial">
+            <p class="about-quote">${t.quote}</p>
+            <p class="about-author">
+              ${t.author_name}
+              ${t.author_role ? `<span class="about-author-role">— ${t.author_role}</span>` : ''}
+            </p>
+          </div>`).join('')}
+      </div>
+      <div class="tc-controls">
+        <button class="tc-btn" id="tc-prev" aria-label="Előző">&#8592;</button>
+        <div class="tc-dots" id="tc-dots"></div>
+        <button class="tc-btn" id="tc-next" aria-label="Következő">&#8594;</button>
+      </div>`;
+
+    let current = 0;
+    const track = document.getElementById('tc-track');
+    const dotsEl = document.getElementById('tc-dots');
+    const items = track.querySelectorAll('.about-testimonial');
+
+    function effectiveCols() {
+      return window.innerWidth < 640 ? 1 : Math.min(cfgCols, total);
+    }
+
+    function setup() {
+      const cols = effectiveCols();
+      const itemW = 100 / cols;
+      const maxPos = total - cols;
+      current = Math.min(current, Math.max(0, maxPos));
+
+      items.forEach(el => el.style.minWidth = `${itemW}%`);
+
+      dotsEl.innerHTML = Array.from({length: maxPos + 1}, (_, i) =>
+        `<button class="tc-dot${i === current ? ' active' : ''}" data-i="${i}"></button>`
+      ).join('');
+      dotsEl.querySelectorAll('.tc-dot').forEach(d =>
+        d.addEventListener('click', () => goTo(+d.dataset.i))
+      );
+
+      track.style.transform = `translateX(-${current * itemW}%)`;
+    }
+
+    function goTo(idx) {
+      const cols = effectiveCols();
+      const maxPos = total - cols;
+      const itemW = 100 / cols;
+      current = Math.max(0, Math.min(idx, maxPos));
+      track.style.transform = `translateX(-${current * itemW}%)`;
+      dotsEl.querySelectorAll('.tc-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    document.getElementById('tc-prev').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('tc-next').addEventListener('click', () => goTo(current + 1));
+
+    let startX = 0;
+    tList.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    tList.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+    });
+
+    window.addEventListener('resize', setup);
+    setup();
+  }
+}
+
+loadAbout();
 loadDances();
 loadGallery();
 loadSchedule();

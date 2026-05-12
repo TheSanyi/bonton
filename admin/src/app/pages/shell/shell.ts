@@ -5,6 +5,7 @@ import { DarkModeService } from '../../services/dark-mode.service';
 import { ToastComponent } from '../../components/toast/toast.component';
 
 const NAV = [
+  { path: 'about',    label: 'Rólunk' },
   { path: 'schedule', label: 'Órarend' },
   { path: 'teachers', label: 'Tanárok' },
   { path: 'events',   label: 'Események' },
