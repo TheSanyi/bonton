@@ -305,6 +305,36 @@ body.dark .item-sub {
   color: #4d5c80;
 }
 
+/* ── Documents ── */
+body.dark .doc-row {
+  background: #131929;
+  border-color: #1e2a45;
+}
+
+body.dark .doc-title {
+  color: #e8eaf0;
+}
+
+body.dark .doc-cat {
+  background: rgba(224, 0, 255, .12);
+  color: #e000ff;
+}
+
+body.dark .doc-year {
+  color: #4d5c80;
+}
+
+body.dark .btn-dl {
+  background: #131929;
+  border-color: #253158;
+  color: #8a97b8;
+}
+
+body.dark .btn-dl:hover {
+  background: #192035;
+  color: #e8eaf0;
+}
+
 body.dark .col-btn {
   background: #0f1525;
   border-color: #253158;

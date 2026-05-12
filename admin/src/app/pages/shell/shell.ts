@@ -10,7 +10,8 @@ const NAV = [
   { path: 'teachers', label: 'Tanárok' },
   { path: 'events',   label: 'Események' },
   { path: 'dances',   label: 'Táncok' },
-  { path: 'gallery',  label: 'Galéria' },
+  { path: 'gallery',   label: 'Galéria' },
+  { path: 'documents', label: 'Dokumentumok' },
 ];
 
 @Component({
