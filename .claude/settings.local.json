@@ -4,7 +4,13 @@
       "Bash(ng new *)",
       "Bash(npm install *)",
       "Bash(npm run *)",
-      "Bash(del *)"
+      "Bash(del *)",
+      "Bash(New-Item -ItemType File -Path \"H:\\\\Projects\\\\Prod\\\\bonton\\\\.nojekyll\" -Force)",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"created\")",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
